@@ -1,0 +1,6 @@
+bin/
+lib/
+pyvenv.cfg
+resetty.egg-info/
+__pycache__
+**/*.sw[n|o|p]
