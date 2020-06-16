@@ -8,15 +8,14 @@ def calculate_days_passed(last_password_update_at, target=date.today()):
 
 def password_has_due_date(password_details):
     last_password_update_at = password_details.password_last_updated_at
-    # change to app_settings.RESET_PASSWORD_DELTA_DAYS
     return (
         calculate_days_passed(last_password_update_at)
-        > app_settings.RESET_PASSWORD_DELTA
+        >= app_settings.RESET_PASSWORD_DELTA_DAYS
     )
 
 
 def password_due(user):
-    return not hasattr(user, "password_details") or password_has_due_date(
+    return (not hasattr(user, "password_details")) or password_has_due_date(
         user.password_details
     )
 
