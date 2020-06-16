@@ -8,9 +8,10 @@ pluggy==0.13.1
 py==1.8.2
 pyparsing==2.4.7
 pytest==5.4.3
+pytest-mock==3.1.1
 python-dateutil==2.8.1
 pytz==2020.1
--e git+git@github.com:banzai-io/resetty.git@7ba9e418b73473f8d027d8653f963c70f52f1c65#egg=resetty
+-e git+git@github.com:banzai-io/resetty.git@a3a905c88098a3aef94d251c42dee36ee5aeda58#egg=resetty
 six==1.15.0
 sqlparse==0.3.1
 wcwidth==0.2.4
