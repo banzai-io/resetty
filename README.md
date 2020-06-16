@@ -3,4 +3,3 @@
 ### Required packages
 * arrow
 * django
-* dotted (to test python objects without actual classes)
