@@ -15,7 +15,7 @@ def password_has_due_date(password_details):
 
 
 def password_due(user):
-    return (not hasattr(user, "password_details")) or password_has_due_date(
+    return not (hasattr(user, "password_details") and user.password_details) or password_has_due_date(
         user.password_details
     )
 
