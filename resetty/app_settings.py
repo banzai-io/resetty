@@ -2,7 +2,7 @@ from django.conf import settings
 
 USER_CATEGORIES_REQUIRING_RESET =  getattr(settings, 'RESETTY_USER_CATEGORIES_REQUIRING_RESET', ['is_staff'])
 RESET_PASSWORD_DELTA_DAYS = getattr(settings, 'RESETTY_RESET_PASSWORD_DELTA_DAYS',  30)
-REDIRECT_EXCLUDE_PATHS = getattr(settings, 'RESETTY_REDIRECT_EXCLUDE_PATHS', [])
+REDIRECT_EXCLUDED_PATHS = getattr(settings, 'RESETTY_REDIRECT_EXCLUDED_PATHS', [])
 
 # RESET_PASSWORD_AREAS = ['admin', 'account']
 

@@ -24,7 +24,7 @@ def password_due(user):
 
 def path_excluded_from_redirect(current_path):
     # add these paths to the app_settings
-    excluded_paths = [
+    excluded_paths = app_settings.REDIRECT_EXCLUDED_PATHS + [
         "/admin/login/",
         "/admin/logout/",
         "/admin/password_change/",
