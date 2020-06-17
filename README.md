@@ -5,4 +5,4 @@
 * django
 
 ### Install
-pip install git+https://github.com/banzai-io/resetty.git#egg=resetty
+pip install -e git+ssh://git@github.com/banzai-io/resetty.git#egg=resetty
