@@ -1,8 +1,10 @@
-from datetime import date
+from datetime import datetime, timezone
 from . import app_settings
 
+def today():
+    return datetime.now(timezone.utc).date()
 
-def calculate_days_passed(last_password_update_at, target=date.today()):
+def calculate_days_passed(last_password_update_at, target=today()):
     return (target - last_password_update_at).days
 
 

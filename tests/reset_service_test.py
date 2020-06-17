@@ -61,6 +61,10 @@ def test_password_last_update_has_not_been_set(user_with_no_password_details):
     assert password_due(user_with_no_password_details) is True
 
 
+def test_password_last_update_is_none():
+    user = User(name="Ignacio", is_authenticated=True, password_details=None)
+    assert password_due(user) is True
+
 def test_user_with_last_update_within_threshold(user_with_password_updated_recently):
     assert password_due(user_with_password_updated_recently) is False
 
