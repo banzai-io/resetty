@@ -2,7 +2,7 @@ from django.conf import settings
 
 settings.configure(
     {
-        "RESETTY_USER_CATEGORIES_REQUIRING_RESET": [],
+        "RESETTY_USER_CATEGORIES_REQUIRING_RESET": ["is_staff"],
         "RESETTY_RESET_PASSWORD_DELTA_DAYS": 30,
     },
 )
@@ -19,8 +19,8 @@ from resetty.resetty.reset_service import (
 )
 from resetty.resetty.app_settings import RESET_PASSWORD_DELTA_DAYS
 
-User = namedtuple("User", ["name", "is_authenticated", "password_details"])
-User.__new__.__defaults__ = ("Ignacio", False, None)
+User = namedtuple("User", ["name", "is_authenticated", "is_staff", "is_superuser", "password_details"])
+User.__new__.__defaults__ = ("Ignacio", False, False, False, None)
 Password = namedtuple("ResetPasswordExtra", ["password_last_updated_at"])
 
 
@@ -48,6 +48,17 @@ def user_with_password_updated_long_time_ago():
         password_details=Password(password_last_updated_at=thirty_days_ago),
     )
 
+@pytest.fixture
+def staff_user(user_with_password_updated_long_time_ago):
+    temp = user_with_password_updated_long_time_ago._asdict()
+    temp['is_staff'] = True
+    return User(**temp)
+
+@pytest.fixture
+def super_user(user_with_password_updated_long_time_ago):
+    temp = user_with_password_updated_long_time_ago._asdict()
+    temp['is_superuser'] = True
+    return User(**temp)
 
 def test_calculate_days_passed():
     now = arrow.utcnow()
@@ -80,5 +91,15 @@ def test_user_needing_reset_not_authenticated(
 ):
     temp = user_with_password_updated_long_time_ago._asdict()
     temp["is_authenticated"] = False
-    non_auth_user = User(temp)
+    non_auth_user = User(**temp)
     assert should_reset_password(non_auth_user) is False
+
+
+def test_staff_user_requires_reset_by_default(staff_user):
+    assert should_reset_password(staff_user) is True
+
+def test_super_user_skips_reset_by_default(super_user):
+    assert should_reset_password(super_user) is False
+#  def test_staff_user_skips_reset_by_settings(staff_user):
+#      monkeypatch.setattr(settings, 'RESETTY_USER_CATEGORIES_REQUIRING_RESET', [])
+#      assert should_reset_password(staff_user) is False
