@@ -104,6 +104,7 @@ def test_staff_user_requires_reset_by_default(monkeypatch, staff_user):
 
 def test_super_user_skips_reset_by_default(super_user):
     assert should_reset_password(super_user) is False
-#  def test_staff_user_skips_reset_by_settings(staff_user):
-#      monkeypatch.setattr(settings, 'RESETTY_USER_CATEGORIES_REQUIRING_RESET', [])
-#      assert should_reset_password(staff_user) is False
+
+def test_super_user_requires_reset_by_settings(monkeypatch, super_user):
+    monkeypatch.setattr(app_settings, 'USER_CATEGORIES_REQUIRING_RESET', ['is_superuser'])
+    assert should_reset_password(super_user) is True
