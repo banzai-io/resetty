@@ -1,15 +1,13 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name="resetty",
     version="0.1",
-    packages=find_packages(exclude=["tests*"]),
-    license="none",
-    description="An example python package with functions simulating depositing and withdrawing cash from a bank account",
-    long_description="Long description from file",
-    #  long_description=open("README.md").read(),
+    packages=["resetty"],
+    license="MIT",
+    description="Django Middleware that requires a user to reset password",
     install_requires=[],
-    url="REPOSITORY_URL",
-    author="AUTHOR_NAME",
-    author_email="AUTHOR_EMAIL",
+    url="https://github.com/banzai-io/resetty/",
+    author="Ignacio De La Madrid",
+    author_email="ignacio@getbanzai.com",
 )
