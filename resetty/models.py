@@ -11,13 +11,3 @@ class ResetPasswordExtra(models.Model):
         related_name="password_details",
     )
     password_last_updated_at = DateField()
-
-
-#  @receiver(post_save, sender=User)
-#  def create_user_profile(sender, instance, created, **kwargs):
-#      if created:
-#          print('Created a new user')
-#          #  Profile.objects.create(user=instance)
-#      import pdb
-#      pdb.set_trace()
-#      print("Hallo")
