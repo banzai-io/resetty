@@ -17,7 +17,7 @@ from resetty.resetty.reset_service import (
     password_due,
     should_reset_password,
 )
-from resetty.resetty.app_settings import RESET_PASSWORD_DELTA_DAYS
+from resetty.resetty import app_settings
 
 User = namedtuple("User", ["name", "is_authenticated", "is_staff", "is_superuser", "password_details"])
 User.__new__.__defaults__ = ("Ignacio", False, False, False, None)
@@ -41,7 +41,7 @@ def user_with_password_updated_recently():
 
 @pytest.fixture
 def user_with_password_updated_long_time_ago():
-    thirty_days_ago = arrow.utcnow().shift(days=-(RESET_PASSWORD_DELTA_DAYS + 1)).date()
+    thirty_days_ago = arrow.utcnow().shift(days=-(app_settings.RESET_PASSWORD_DELTA_DAYS + 1)).date()
     return User(
         name="Ignacio",
         is_authenticated=True,
@@ -97,6 +97,10 @@ def test_user_needing_reset_not_authenticated(
 
 def test_staff_user_requires_reset_by_default(staff_user):
     assert should_reset_password(staff_user) is True
+
+def test_staff_user_requires_reset_by_default(monkeypatch, staff_user):
+    monkeypatch.setattr(app_settings, 'USER_CATEGORIES_REQUIRING_RESET', [])
+    assert should_reset_password(staff_user) is False
 
 def test_super_user_skips_reset_by_default(super_user):
     assert should_reset_password(super_user) is False
