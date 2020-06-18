@@ -1,9 +1,9 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name="resetty",
     version="0.1",
-    packages=["resetty"],
+    packages=find_packages(exclude=["tests"]),
     license="MIT",
     description="Django Middleware that requires a user to reset password",
     url="https://github.com/banzai-io/resetty/",
