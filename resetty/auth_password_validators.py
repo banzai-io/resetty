@@ -15,4 +15,4 @@ class DoNotReusePasswordValidator(object):
             )
 
     def get_help_text(self):
-        return "Please do not use your previous password"
+        return "Your old password can't be used"
