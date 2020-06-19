@@ -1,3 +1,4 @@
+import re
 from datetime import datetime, timezone
 from . import app_settings
 
@@ -31,7 +32,9 @@ def path_excluded_from_redirect(current_path):
         "/admin/password_change/done/",
     ]
 
-    return current_path.startswith("/accounts/reset/") or any(
+    pattern  = r'\/?(.+)?\/reset\/?'
+
+    return re.match(pattern, current_path) or any(
         [current_path == path for path in excluded_paths]
     )
 

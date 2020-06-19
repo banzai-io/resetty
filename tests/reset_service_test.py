@@ -127,10 +127,13 @@ def test_super_user_requires_reset_by_settings(monkeypatch, super_user):
 def test_default_paths_excluded_from_redirect():
     default_excluded_paths = [
         "/accounts/reset/",
+        "/accounts/reset/123/gq/"
         "/admin/login/",
         "/admin/logout/",
         "/admin/password_change/",
         "/admin/password_change/done/",
+        "/reset/",
+        "/reset/123/gq/"
     ]
 
     for path in default_excluded_paths:
