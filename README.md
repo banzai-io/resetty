@@ -64,4 +64,4 @@ and any route that matches the pattern
 `r'\/?(.+)?\/reset\/?'`
 
 # Last step
-Set your local settings and build your container or pip install.
+Set your local settings and build your container or pip install. Also, run your migrations.
