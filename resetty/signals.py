@@ -37,8 +37,6 @@ def create_or_update_password_last_update(user, the_date):
         password_details = ResetPasswordExtra(
             user=user, password_last_updated_at=the_date
         )
-    password_details.save()
-
 
 def find_password_from_db(user):
     if User.objects.filter(pk=user.pk).exists():
