@@ -49,7 +49,12 @@ You can override resetty's default values in your settings file. The available o
 ### RESETTY_RESET_PASSWORD_DELTA_DAYS
 * Delta time in days after last password update where we require a new one
 * Type: int 
-* Default value: `30`
+* Default value: `90`
+
+### RESETTY_RESET_PASSWORD_URL
+* URL where the user will reset her/his password.
+* Type: string
+* Default value: `/admin/password_change/`
 
 ### RESETTY_REDIRECT_EXCLUDED_PATHS
 * URL paths which the middleware exempts from redirection. This is important to avoid request looping
