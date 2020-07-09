@@ -1,5 +1,7 @@
 # Resetty (Reset Password Middleware for Django). Banzai made.
 
+This repo will add an automated functionallity into django apps to allow an automated password reset every 90 days (by default) for Staff and Superuser type users.
+
 # Install
 Add the following line to your requirements.txt file
 
@@ -70,3 +72,6 @@ and any route that matches the pattern
 
 # Last step
 Set your local settings and build your container or pip install. Also, run your migrations.
+
+# Expected behavior after install
+All views not included in `RESETTY_REDIRECT_EXCLUDED_PATHS` will require you to change your password if haven't. This behavior will be repeated everytime the passwrod expires (`RESETTY_RESET_PASSWORD_DELTA_DAYS`).
