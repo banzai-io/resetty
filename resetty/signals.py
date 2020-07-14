@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
+
 # pull today from the service so it is consistent across this package
 from .reset_service import today
 from .models import ResetPasswordExtra
@@ -22,7 +23,7 @@ def set_last_password_update(sender, **kwargs):
         new_password = user.password
         old_password = find_password_from_db(user)
 
-        if new_password != old_password:
+        if new_password != old_password or not user.hasattr("password_details"):
             # this makes sure that the update only happens on password change.
             create_or_update_password_last_update(user, today())
 
@@ -38,8 +39,8 @@ def create_or_update_password_last_update(user, the_date):
             user=user, password_last_updated_at=the_date
         )
 
+
 def find_password_from_db(user):
     if User.objects.filter(pk=user.pk).exists():
         return User.objects.get(pk=user.pk).password
     return None
-
