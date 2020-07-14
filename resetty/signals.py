@@ -23,7 +23,7 @@ def set_last_password_update(sender, **kwargs):
         new_password = user.password
         old_password = find_password_from_db(user)
 
-        if new_password != old_password or not user.hasattr("password_details"):
+        if new_password != old_password or not hasattr(user, "password_details"):
             # this makes sure that the update only happens on password change.
             create_or_update_password_last_update(user, today())
 
