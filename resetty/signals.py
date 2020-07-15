@@ -12,6 +12,11 @@ User = get_user_model()
 @receiver(post_save, sender=User)
 def create_password_details(sender, instance, created, **kwargs):
     """ Makes sure we save the password details only after the user instance is saved."""
+    if created:
+        instance.password_details = ResetPasswordExtra(
+            user=instance, password_last_updated_at=the_date
+        )
+
     instance.password_details.save()
 
 
