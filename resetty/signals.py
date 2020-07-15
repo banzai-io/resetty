@@ -14,7 +14,7 @@ def create_password_details(sender, instance, created, **kwargs):
     """ Makes sure we save the password details only after the user instance is saved."""
     if created:
         instance.password_details = ResetPasswordExtra(
-            user=instance, password_last_updated_at=the_date
+            user=instance, password_last_updated_at=today()
         )
 
     instance.password_details.save()
