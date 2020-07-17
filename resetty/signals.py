@@ -18,12 +18,13 @@ def user_should_set_password_details_skipping_reset(user):
 @receiver(post_save, sender=User)
 def create_password_details(sender, instance, created, **kwargs):
     """ Makes sure we save the password details only after the user instance is saved."""
-    if created:
+    if created and user_should_set_password_details_skipping_reset(instance):
         instance.password_details = ResetPasswordExtra(
             user=instance, password_last_updated_at=today()
         )
 
-    instance.password_details.save()
+    if instance.password_details:
+        instance.password_details.save()
 
 
 @receiver(pre_save, sender=User)
