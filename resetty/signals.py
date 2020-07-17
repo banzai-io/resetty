@@ -3,10 +3,16 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
 # pull today from the service so it is consistent across this package
-from .reset_service import today
+from .reset_service import today, user_within_categories_requiring_reset
 from .models import ResetPasswordExtra
 
 User = get_user_model()
+
+
+def user_should_set_password_details_skipping_reset(user):
+    return not hasattr(
+        user, "password_details"
+    ) and not user_within_categories_requiring_reset(user)
 
 
 @receiver(post_save, sender=User)
@@ -28,7 +34,10 @@ def set_last_password_update(sender, **kwargs):
         new_password = user.password
         old_password = find_password_from_db(user)
 
-        if new_password != old_password or not hasattr(user, "password_details"):
+        if (
+            new_password != old_password
+            or user_should_set_password_details_skipping_reset(user)
+        ):
             # this makes sure that the update only happens on password change.
             create_or_update_password_last_update(user, today())
 

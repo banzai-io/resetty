@@ -2,8 +2,10 @@ import re
 from datetime import datetime, timezone
 from . import app_settings
 
+
 def today():
     return datetime.now(timezone.utc).date()
+
 
 def calculate_days_passed(last_password_update_at, target=today()):
     return (target - last_password_update_at).days
@@ -18,9 +20,9 @@ def password_has_due_date(password_details):
 
 
 def password_due(user):
-    return not (hasattr(user, "password_details") and user.password_details) or password_has_due_date(
-        user.password_details
-    )
+    return not (
+        hasattr(user, "password_details") and user.password_details
+    ) or password_has_due_date(user.password_details)
 
 
 def path_excluded_from_redirect(current_path):
@@ -32,21 +34,25 @@ def path_excluded_from_redirect(current_path):
         "/admin/password_change/done/",
     ]
 
-    pattern  = r'\/?(.+)?\/reset\/?'
+    pattern = r"\/?(.+)?\/reset\/?"
 
     return re.match(pattern, current_path) or any(
         [current_path == path for path in excluded_paths]
     )
 
 
+def user_within_categories_requiring_reset(user):
+    return any(
+        [
+            getattr(user, category)
+            for category in app_settings.USER_CATEGORIES_REQUIRING_RESET
+        ]
+    )
+
+
 def should_reset_password(user):
     return (
         user.is_authenticated
-        and any(
-            [
-                getattr(user, category)
-                for category in app_settings.USER_CATEGORIES_REQUIRING_RESET
-            ]
-        )
+        and user_within_categories_requiring_reset(user)
         and password_due(user)
     )
