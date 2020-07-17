@@ -23,7 +23,7 @@ def create_password_details(sender, instance, created, **kwargs):
             user=instance, password_last_updated_at=today()
         )
 
-    if instance.password_details:
+    if hasattr(instance, "password_details"):
         instance.password_details.save()
 
 
