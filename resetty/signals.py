@@ -23,8 +23,10 @@ def create_password_details(sender, instance, created, **kwargs):
             user=instance, password_last_updated_at=today()
         )
 
-    if hasattr(instance, "password_details"):
+    try:
         instance.password_details.save()
+    except Exception:
+        pass
 
 
 @receiver(pre_save, sender=User)
