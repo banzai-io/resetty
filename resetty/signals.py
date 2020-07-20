@@ -22,6 +22,7 @@ def create_password_details(sender, instance, created, **kwargs):
     if (
         created
         and hasattr(instance, "id")
+        and instance.id
         and user_should_set_password_details_skipping_reset(instance)
     ):
         instance.password_details = ResetPasswordExtra(
