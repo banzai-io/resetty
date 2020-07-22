@@ -6,7 +6,7 @@ This repo will add an automated functionallity into django apps to allow an auto
 Add the following line to your requirements.txt file
 
 ```
-git+https://github.com/banzai-io/resetty.git#egg=resetty
+resetty==1.0
 ```
 
 # Setup
