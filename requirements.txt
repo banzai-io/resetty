@@ -1,6 +1,6 @@
 arrow==0.15.6
 attrs==19.3.0
-Django==2.2.13
+Django==2.2.24
 importlib-metadata==1.6.1
 more-itertools==8.4.0
 packaging==20.4
